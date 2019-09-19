@@ -1,0 +1,115 @@
+-- What's the title and ID of the longest film?
+-- BONUS points if you use a subquery :) 
+SELECT title, length
+FROM film
+WHERE length = (SELECT MAX(length) FROM film);
+
+       title        | length 
+--------------------+--------
+ Chicago North      |    185
+ Control Anthem     |    185
+ Darn Forrester     |    185
+ Gangs Pride        |    185
+ Home Pity          |    185
+ Muscle Bright      |    185
+ Pond Seattle       |    185
+ Soldiers Evolution |    185
+ Sweet Brotherhood  |    185
+ Worst Banger       |    185
+
+-- What is the title and ID of the film with the lowest replacement cost?
+-- BONUS points if you use a subquery :) 
+SELECT title, film_id, replacement_cost
+FROM film
+WHERE replacement_cost = (SELECT MIN(replacement_cost) FROM film);
+
+         title          | film_id | replacement_cost 
+------------------------+---------+------------------
+ Anaconda Confessions   |      23 |             9.99
+ Cider Desire           |     150 |             9.99
+ Control Anthem         |     182 |             9.99
+ Daisy Menagerie        |     203 |             9.99
+ Deliverance Mulholland |     221 |             9.99
+ Dude Blindness         |     260 |             9.99
+ Edge Kissing           |     272 |             9.99
+ Encino Elf             |     281 |             9.99
+ Factory Dragon         |     299 |             9.99
+ Fellowship Autumn      |     307 |             9.99
+ Gandhi Kwai            |     348 |             9.99
+ Gunfighter Mussolini   |     389 |             9.99
+ Heartbreakers Bright   |     409 |             9.99
+ Jason Trap             |     476 |             9.99
+ Kissing Dolls          |     501 |             9.99
+ Life Twisted           |     522 |             9.99
+ Maiden Home            |     551 |             9.99
+ Matrix Snowman         |     565 |             9.99
+ Metropolis Coma        |     572 |             9.99
+ Newton Labyrinth       |     623 |             9.99
+ North Tequila          |     627 |             9.99
+ Notorious Reunion      |     629 |             9.99
+ Opposite Necklace      |     639 |             9.99
+ Papi Necklace          |     656 |             9.99
+ Paths Control          |     662 |             9.99
+ Pluto Oleander         |     686 |             9.99
+ Purple Movie           |     705 |             9.99
+ Roxanne Rebel          |     747 |             9.99
+ Star Operation         |     841 |             9.99
+ Stepmom Dream          |     845 |             9.99
+ Sting Personal         |     846 |             9.99
+ Sun Confessions        |     863 |             9.99
+ Talented Homicide      |     875 |             9.99
+ Telemark Heartbreakers |     880 |             9.99
+ Theory Mermaid         |     886 |             9.99
+ Thin Sagebrush         |     888 |             9.99
+ Trojan Tomorrow        |     912 |             9.99
+ Truman Crazy           |     915 |             9.99
+ Valentine Vanishing    |     931 |             9.99
+ Wait Cider             |     953 |             9.99
+ Young Language         |     996 |             9.99
+
+
+
+-- What is the tile and ID of the film with the highest rental_rate?
+
+SELECT title, film_id, rental_rate 
+FROM film
+WHERE rental_rate = (SELECT MAX(rental_rate) FROM film);
+
+-- Show the payment_id's of all transactions after or on May 1st 2007
+SELECT payment_id, payment_date 
+FROM payment
+WHERE payment_date >= '2007-05-01 00:00:00';
+
+-- Show all payment ID's and payment date's with a transaction amount less than $3.
+SELECT payment_id, payment_date, amount
+FROM payment
+WHERE amount < '3';
+
+-- Get the emails of all customers that shop at store 1 that are inactive (use 'active')
+SELECT email, store_id, active
+FROM customer
+WHERE activebool is FALSE
+and store_id = '1';
+
+                email                | store_id | active 
+-------------------------------------+----------+--------
+ sheila.wells@sakilacustomer.org     |        1 |      0
+ penny.neal@sakilacustomer.org       |        1 |      0
+ harry.arce@sakilacustomer.org       |        1 |      0
+ nathan.runyon@sakilacustomer.org    |        1 |      0
+ maurice.crawley@sakilacustomer.org  |        1 |      0
+ christian.jung@sakilacustomer.org   |        1 |      0
+ jimmie.eggleston@sakilacustomer.org |        1 |      0
+ terrance.roush@sakilacustomer.org   |        1 |      0
+
+
+--How much have these customers spent? (Use code from the previous query to
+-- make a subquery or a CTE to solve this one.) 
+
+SELECT email, store_id, active, amount
+FROM customer
+LEFT JOIN payment
+ON c.customer_id = p.customer_id
+WHERE activebool is FALSE
+and store_id = '1'
+;
