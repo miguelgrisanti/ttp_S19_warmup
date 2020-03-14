@@ -1,0 +1,47 @@
+-- What's the title and ID of the longest film?
+-- BONUS points if you use a subquery :) 
+
+SELECT film_id, title
+FROM film
+WHERE length = (SELECT MAX(length) FROM film )
+LIMIT 1;
+
+-- What is the title and ID of the film with the lowest replacement cost?
+-- BONUS points if you use a subquery :) 
+SELECT film_id, title
+FROM film
+WHERE replacement_cost = (SELECT MIN(replacement_cost) FROM film)
+LIMIT 1; 
+
+-- What is the tile and ID of the film with the highest rental_rate?
+SELECT title, film_id
+FROM film
+WHERE rental_rate = (SELECT MAX(rental_rate) FROM film)
+LIMIT 1;
+
+-- Show the payment_id's of all transactions after or on May 1st 2007
+SELECT payment_id 
+FROM payment
+WHERE payment_date >= '2007-05-01';
+
+-- Show all payment ID's and payment date's with a transaction amount less than $3.
+SELECT payment_id, payment_date
+FROM payment
+WHERE amount < 3;
+
+-- Get the emails of all customers that shop at store 1 that are inactive (use 'active')
+SELECT email
+FROM customer
+WHERE store_id = 1
+AND active = 0;
+
+--How much have these customers spent? (Use code from the previous query to
+-- make a subquery or a CTE to solve this one.) 
+
+SELECT customer_id, SUM(amount)
+FROM payment  
+WHERE customer_id IN (SELECT customer_id
+FROM customer
+WHERE store_id = 1
+AND active = 0)
+GROUP BY customer_id;
